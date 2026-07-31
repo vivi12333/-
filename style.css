@@ -1,0 +1,41 @@
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+html, body { min-height: 100%; margin: 0; }
+body { background: #272727; font-family: Arial, sans-serif; }
+.stage { min-height: 100dvh; display: grid; place-items: center; padding: 18px; }
+.device { position: relative; width: min(414px, calc((100dvh - 36px) * .462)); aspect-ratio: 414 / 896; overflow: hidden; background: #000; }
+.screen, .living-pet { position: absolute; inset: 0; display: block; width: 100%; height: 100%; user-select: none; -webkit-user-drag: none; }
+.screen-back { z-index: 0; }
+.screen-front { z-index: 1; }
+/* The image is a second copy of the matching Figma export. Its mask is only over the pet area,
+   so the rest of the composition remains unchanged while the pet feels alive. */
+.living-pet { z-index: 2; pointer-events: none; clip-path: ellipse(29% 13% at 50% 56%); opacity: 0; transform-origin: 50% 56%; }
+.device[data-pet="true"] .living-pet { opacity: 1; animation: breathing 3.2s ease-in-out infinite; }
+.tap-zone { position: absolute; z-index: 3; inset: 0; padding: 0; border: 0; background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tap-zone:focus-visible { outline: 2px solid #fff; outline-offset: -4px; }
+.screen-front.carousel { animation: carousel .42s cubic-bezier(.2,.8,.25,1) both; }
+.screen-front.pop { animation: pop .38s cubic-bezier(.2,.9,.28,1) both; }
+.screen-front.cloud { animation: cloud .68s cubic-bezier(.18,.76,.24,1) both; }
+.screen-front.arrive { animation: arrive .6s cubic-bezier(.18,.86,.28,1) both; }
+.screen-front.touch { animation: touch .36s ease-out both; }
+.screen-front.joy { animation: joy .48s cubic-bezier(.2,.9,.3,1) both; }
+.screen-front.tap { animation: tap .32s ease-out both; }
+.screen-front.eat { animation: eat .58s cubic-bezier(.2,.82,.27,1) both; }
+.screen-front.speech { animation: speech .38s cubic-bezier(.2,.85,.3,1) both; }
+.screen-front.sheet { animation: sheet .46s cubic-bezier(.18,.8,.28,1) both; }
+.device.react .living-pet { animation: pet-react .52s cubic-bezier(.2,.9,.3,1) both; }
+.device.feed .living-pet { animation: munch .68s ease-in-out 2; }
+@keyframes carousel { from { opacity: .55; transform: translateX(7%); } to { opacity: 1; transform: translateX(0); } }
+@keyframes pop { from { opacity: 0; transform: scale(.965); } to { opacity: 1; transform: scale(1); } }
+@keyframes cloud { from { opacity: 0; filter: brightness(1.18); transform: scale(1.035); } to { opacity: 1; filter: none; transform: scale(1); } }
+@keyframes arrive { 0% { opacity: 0; transform: scale(.88); } 62% { opacity: 1; transform: scale(1.025); } 100% { transform: scale(1); } }
+@keyframes touch { from { filter: brightness(1.08); transform: scale(1.012); } to { filter: none; transform: scale(1); } }
+@keyframes joy { 0%,100% { transform: translateY(0); } 45% { transform: translateY(-7px); } }
+@keyframes tap { from { opacity: .72; transform: scale(.985); } to { opacity: 1; transform: scale(1); } }
+@keyframes eat { 0% { transform: scale(1); } 35% { transform: scale(1.014); } 65% { transform: scale(.994); } 100% { transform: scale(1); } }
+@keyframes speech { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes sheet { from { opacity: .35; transform: translateY(14%); } to { opacity: 1; transform: translateY(0); } }
+@keyframes breathing { 0%,100% { transform: scale(1); } 50% { transform: scale(1.012); } }
+@keyframes pet-react { 0%,100% { transform: translateY(0) scale(1); } 45% { transform: translateY(-5px) scale(1.024); } }
+@keyframes munch { 0%,100% { transform: scale(1); } 35% { transform: scale(.992) translateY(2px); } 65% { transform: scale(1.012) translateY(-1px); } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; } }
